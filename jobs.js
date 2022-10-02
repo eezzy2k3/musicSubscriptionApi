@@ -1,6 +1,7 @@
 const cron = require("node-cron")
 const Plan = require("./src/models/plan")
 const User = require("./src/models/usermodel")
+const moment = require("moment")
 
 
     const task = cron.schedule('0 0 * * *', async(req,res) => {
@@ -13,8 +14,10 @@ const User = require("./src/models/usermodel")
 
        const task2 = cron.schedule('* * * * *', async(req,res) => {
         const users = await User.find()
+        // set todays date
+        let todaysDate = moment(new Date()).format("YYYY-MM-DD hh:mm")
         for(let i = 0; i<users.length; i++){
-           if(users[i].expiredAt == Date.now()){
+           if(moment(users[i].expireAt).format("YYYY-MM-DD hh:mm") === todaysDate){
                users[i].isSubscribed = false
               await Plan.findOneAndDelete({user:users[i]._id})
                await users[i].save()

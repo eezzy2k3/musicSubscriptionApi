@@ -73,7 +73,7 @@ if(subscription){
                     // set expiration date and issubscribed to true
                     
                     if(subscription.plan == "daily"){
-                        user.expireAt =  new Date(Date.now() + 86400000 )
+                        user.expireAt = new Date(Date.now() + 86400000)
                         user.isSubscribed = true
                         await user.save()
                     }

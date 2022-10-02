@@ -23,4 +23,18 @@ const register = asyncHandler(async(req,res,next)=>{
     res.status(201).json({success:true,data:user})
 })
 
+
+// desc => get me
+// route => GET/api/v1/auth
+const getUser = asyncHandler(async(req,res,next)=>{
+    
+    const id = req.user.id
+   
+    // get a user from DB
+    const user = await User.findById(id)
+   
+    res.status(200).json({success:true,data:user})
+})
+
+
 module.exports = register
