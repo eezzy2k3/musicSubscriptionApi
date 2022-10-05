@@ -1,5 +1,5 @@
 const {createSub,getSub} = require("../controllers/subscription")
-const authorize = require("../middlewares/auth")
+const {authorize}  = require("../middlewares/auth")
 
 const express = require("express")
 

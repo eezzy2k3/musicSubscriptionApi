@@ -22,7 +22,7 @@ const getMusic = asyncHandler(async(req,res,next)=>{
     if(!music) return next(new ErrorResponse("music not found",404))
 
     const user = await User.findById(userId)
-
+    // if user has made 2 get request and on free subscription
     if(user.contentCount == 2 && user.isSubscribed == false) return next(new ErrorResponse("you have exceeded your free music for today kindly subscribe to a plan",400))
 
     user.contentCount = user.contentCount + 1

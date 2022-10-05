@@ -26,7 +26,7 @@ const register = asyncHandler(async(req,res,next)=>{
 
 // desc => get me
 // route => GET/api/v1/auth
-const getUser = asyncHandler(async(req,res,next)=>{
+const user = asyncHandler(async(req,res,next)=>{
     
     const id = req.user.id
    
@@ -37,4 +37,4 @@ const getUser = asyncHandler(async(req,res,next)=>{
 })
 
 
-module.exports = register
+module.exports = {register,user}

@@ -1,5 +1,5 @@
 const {checkout,getPlan} = require("../controllers/plan")
-const authorize = require("../middlewares/auth")
+const {authorize}  = require("../middlewares/auth")
 
 
 const express = require("express")

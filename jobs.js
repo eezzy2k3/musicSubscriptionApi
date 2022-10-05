@@ -1,10 +1,11 @@
 const cron = require("node-cron")
 const Plan = require("./src/models/plan")
 const User = require("./src/models/usermodel")
+const sendMail = require("./src/utils/sendMail")
 const moment = require("moment")
 
 
-    const task = cron.schedule('0 0 * * *', async(req,res) => {
+const task = cron.schedule('0 0 * * *', async(req,res) => {
         const users = await User.find()
         for(let i = 0; i<users.length; i++){
             users[i].contentCount = 0
@@ -20,8 +21,13 @@ const moment = require("moment")
            if(moment(users[i].expireAt).format("YYYY-MM-DD hh:mm") === todaysDate){
                users[i].isSubscribed = false
               await Plan.findOneAndDelete({user:users[i]._id})
-               await users[i].save()
-               console.log("task2 ran")
+              await sendMail({
+                email:users[i].email,
+                subject:"subscription expired",
+                message:`Hi ${users[i].name}, you subscription has expired kindly choose a plan and subscribe again to enjoy our services `
+               })
+              await users[i].save()
+              console.log("task2 ran")
            }
       }})
 
